@@ -11,4 +11,17 @@ class Idea {
         const stringifiedIdeas = JSON.stringify(ideas)
         localStorage.setItem('ideas', stringifiedIdeas)
     }
+
+    updateIdea() {
+
+    }
+
+    deleteFromStorage(index) {
+        idea.splice(index, 1)
+        this.saveToStorage()
+    }
+
+    toggleFavoriteIcon() {
+        this.isFavorited = !this.isFavorited;
+    }
 }

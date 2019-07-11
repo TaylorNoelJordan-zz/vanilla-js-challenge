@@ -27,7 +27,11 @@ h2 {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 35px; 
 }
 
 .idea-form-container {
@@ -51,9 +55,11 @@ h1 {
 }
 
 .idea-form-input {
+    border-radius: 12px;
     font-size: 16px;
     height: 40px;
     margin: 15px;
+    padding: 2px;
     width: 300px;
 }
 
@@ -101,9 +107,10 @@ h1 {
 .idea-title {
     color: #0e6060;
     display: inline-block;
+    margin: 5px;
 }
 
 .idea-body {
     border: dotted #0e6060;
-    padding: 5px;
+    padding: 8px;
 }
