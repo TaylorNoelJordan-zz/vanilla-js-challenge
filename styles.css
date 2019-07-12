@@ -107,11 +107,13 @@ h2 {
 .idea-header {
     display: flex;
     justify-content: space-between;
+    align-content: flex-end;
 }
 
 .idea-title {
     color: #0e6060;
     display: inline-block;
+    font-size: 25px;
     margin: 5px;
 }
 

@@ -4,7 +4,6 @@ class Idea {
         this.title = title;
         this.body = body;
         this.isFavorited = false;
-
     }
 
     saveToStorage(ideas) {
@@ -16,12 +15,12 @@ class Idea {
 
     }
 
-    deleteFromStorage(index) {
-        idea.splice(index, 1)
+   deleteFromStorage = (index) => {
+        ideas.splice(index, 1)
         this.saveToStorage()
     }
 
-    toggleFavoriteIcon() {
+    toggleFavoriteIcon = () => {
         this.isFavorited = !this.isFavorited;
     }
 }

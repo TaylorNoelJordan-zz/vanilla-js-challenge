@@ -14,6 +14,9 @@ const selectIcon = (e) => {
     if(e.target.id === 'delete-icon') {
         targetRemoveIdea(e)
     }
+    if(e.target.id === 'fav-icon') {
+        toggleFavorite(e)
+    }
 }
 
 const postIdea = (e) => {
@@ -22,9 +25,17 @@ const postIdea = (e) => {
     const idea = ideas[ideas.length -1];
     createIdea(idea);
     clearInputs();
-    // disableSubmitBtn();
     verifyInputs();
 }
+
+// const loadIdeas = () => {
+//     const saved = ideas.map(idea => {
+//         idea = new Idea(idea.title, idea.body, idea.id, idea.isFavorited)
+//         return saved;
+//     })
+//     ideas = saved;
+//     pageRefresh(saved);
+// }
 
 const createIdea = (idea) => {
     placeholder.classList.add('hidden');
@@ -62,7 +73,6 @@ const saveIdea = () => {
     ideas.push(newIdea)
     JSON.stringify(newIdea)
     newIdea.saveToStorage(ideas)
-    console.log(ideas)
 }
 
 const clearInputs = () => {
@@ -70,12 +80,14 @@ const clearInputs = () => {
     bodyInput.value = '';
 }
 
-const onLoad = () => {
+const loadIdeas = () => {
     const savedIdeas = JSON.parse(localStorage.getItem('ideas'))
     savedIdeas.map(idea => {
         idea = new Idea()
         return idea;
     })
+    ideas = savedIdeas;
+    pageRefresh(ideas)
 }
 const pageRefresh = () => {
     ideas.forEach(idea => {
@@ -83,21 +95,19 @@ const pageRefresh = () => {
     })
 }
 
-// const toggleFavorite = (e) => {
-//     const targetId = e.target.parentElement.parentElement.dataset.id
-//     ideas.filter(idea => {
-//         if(idea.id = targetId) {
-//             idea.toggleFavoriteIcon()
-//         }
-//     })
+const toggleFavorite = (e) => {
+    const targetId = parseInt(e.target.parentElement.parentElement.dataset.id)
+    const targetIdea = ideas.filter(item => item.id === targetId)
+    targetIdea.toggleFavorite()
 
-// }
+}
 
 const targetRemoveIdea = (e) => {
     const ideaToRemove = e.target.closest('.idea-card');
-    console.log(ideaToRemove)
-    const index = findIndex(ideaToRemove)
-    removeIdea(index)
+    console.log(ideaToRemove);
+    const index = findIndex(ideaToRemove);
+    removeIdea(index);
+    loadIdeas();
 }
 
 const removeIdea = (index) => {
@@ -107,12 +117,11 @@ const removeIdea = (index) => {
 
 const findIndex = (idea) => {
     const ideaId = parseInt(idea.dataset.id)
-    ideas.findIndex(item => item.id = ideaId)
+    console.log('ideas', ideas)
+   return ideas.findIndex(item => item.id == ideaId)
 }
 
-window.onload =(e) => {
-    pageRefresh()
-}
+window.addEventListener('load', loadIdeas)
 ideaSubmitBtn.addEventListener('click', postIdea)
 ideasDisplay.addEventListener('click', selectIcon)
 ideaForm.addEventListener('keyup', verifyInputs)
