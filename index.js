@@ -1,5 +1,6 @@
 let titleInput = document.querySelector('#title-input');
 let bodyInput = document.querySelector('#body-input');
+let ideaForm = document.querySelector('.idea-form')
 let titleDisplay = document.querySelector('.idea-title');
 let bodyDisplay = document.querySelector('.idea-body');
 let ideasDisplay = document.querySelector('.idea-container')
@@ -9,13 +10,20 @@ let favIcon = document.querySelector('#fav-icon');
 let deleteIcon = document.querySelector('#delete-icon');
 let ideas = JSON.parse(localStorage.getItem('ideas')) || [];
 
+const selectIcon = (e) => {
+    if(e.target.id === 'delete-icon') {
+        targetRemoveIdea(e)
+    }
+}
 
 const postIdea = (e) => {
     e.preventDefault();
     saveIdea();
     const idea = ideas[ideas.length -1];
-    createIdea(idea, e);
+    createIdea(idea);
     clearInputs();
+    // disableSubmitBtn();
+    verifyInputs();
 }
 
 const createIdea = (idea) => {
@@ -30,6 +38,23 @@ const createIdea = (idea) => {
         <p class='idea-body' contenteditable=true>${idea.body}</p>
     </article>` 
     + ideasDisplay.innerHTML
+}
+
+const verifyInputs = () => {
+    if((titleInput.value === '' )&& (bodyInput.value === '')) {
+        disableSubmitBtn()
+    } else {
+        enableSubmitBtn()
+    }
+}
+
+const enableSubmitBtn = () => {
+    ideaSubmitBtn.removeAttribute('disabled', 'disabled')
+}
+
+const disableSubmitBtn = () => {
+    ideaSubmitBtn.setAttribute('disabled', 'disabled')
+    ideaSubmitBtn.classList.add('disabled')
 }
 
 const saveIdea = () => {
@@ -58,18 +83,19 @@ const pageRefresh = () => {
     })
 }
 
-const toggleFavorite = (e) => {
-    const targetId = e.target.parentElement.parentElement.dataset.id
-    ideas.filter(idea => {
-        if(idea.id = targetId) {
-            idea.toggleFavoriteIcon()
-        }
-    })
+// const toggleFavorite = (e) => {
+//     const targetId = e.target.parentElement.parentElement.dataset.id
+//     ideas.filter(idea => {
+//         if(idea.id = targetId) {
+//             idea.toggleFavoriteIcon()
+//         }
+//     })
 
-}
+// }
 
 const targetRemoveIdea = (e) => {
-    const ideaToRemove = e.target.closest('idea-card');
+    const ideaToRemove = e.target.closest('.idea-card');
+    console.log(ideaToRemove)
     const index = findIndex(ideaToRemove)
     removeIdea(index)
 }
@@ -88,5 +114,7 @@ window.onload =(e) => {
     pageRefresh()
 }
 ideaSubmitBtn.addEventListener('click', postIdea)
-ideasDisplay.addEventListener('click', toggleFavorite)
+ideasDisplay.addEventListener('click', selectIcon)
+ideaForm.addEventListener('keyup', verifyInputs)
+
 

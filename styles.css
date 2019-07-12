@@ -21,7 +21,7 @@ body {
 
 h1,
 h2 {
-    color: white;
+    color: #f2f9f9;
     font-family: 'Lobster', cursive;
     text-align: center;
 }
@@ -31,7 +31,7 @@ h1 {
 }
 
 h2 {
-    font-size: 35px; 
+    font-size: 40px; 
 }
 
 .idea-form-container {
@@ -70,6 +70,11 @@ h2 {
     font-size: 20px;
     height: 35px;
     width: 150px;
+}
+
+.idea-form-submit-btn:disabled {
+    cursor: none;
+    opacity: 0.6;
 }
 
 .hidden {
@@ -114,3 +119,4 @@ h2 {
     border: dotted #0e6060;
     padding: 8px;
 }
+
